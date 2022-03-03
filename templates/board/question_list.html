@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>질문 목록</title>
+</head>
+<body>
+  <h1>질문 목록입니다.</h1>
+  {% if question_list %}
+    <ul>
+        {% for question in question_list %}
+        <li>
+            <a href="{% url 'board:detail' question.id %}">{{ question.subject }}</a>
+<!--            <a href="board/{{ question.id }}/">{{ question.subject }}</a>-->
+        </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+  <p>질문이 없습니다.</p>
+  {% endif %}
+  <a href="{% url 'board:question_create' %}">질문 등록</a>
+</body>
+</html>

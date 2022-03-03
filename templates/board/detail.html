@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>답변 페이지</title>
+</head>
+<body>
+  <h2>{{ question.subject }}</h2>
+  <p>{{ question.content }}</p>
+  <h4>{{ question.answer_set.count }}개의 답변이 있습니다.</h4>
+  <div>
+      <ul>
+          {% for answer in question.answer_set.all %}
+          <li>{{ answer.content }}</li>
+          {% endfor %}
+      </ul>
+  </div>
+</body>
+</html>
