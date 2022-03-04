@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>답변 페이지</title>
-    <link rel="stylesheet" href="{% static 'board/css/bootstrap.css/' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}
+  Question - {{ question.subject }}
+{% endblock %}
+
+{% block content %}
     <div class="container my-3">
         <!-- 질문 영역 -->
        <h2 class="border-bottom py-2">{{ question.subject }}</h2>
         <div class="card my-3">
             <div class="card-body">
-                <div class="card-text">{{ question.content }}</div>
+                <div class="card-text" style="white-space:pre-line">{{ question.content }}</div>
                 <div class="d-flex justify-content-end">
                     <div class="badge badge-light p-2">
                         {{ question.create_date }}
@@ -27,7 +24,7 @@
         {% for answer in question.answer_set.all %}
         <div class="card my-3">
             <div class="card-body">
-                <div class="card-text">{{ answer.content }}</div>
+                <div class="card-text" style="white-space:pre-line">{{ answer.content }}</div>
                 <div class="d-flex justify-content-end">
                     <div class="badge badge-light p-2">
                         {{ answer.create_date }}
@@ -39,12 +36,23 @@
         <!-- 답변 등록 -->
         <form action="{% url 'board:answer_create' question.id %}" method="post">
           {% csrf_token %}
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field in form %}
+                    {% if field.errors %}
+                    <strong>{{ field.label }}</strong>
+                        {{ field.errors }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
           <div class="form-group">
               <textarea name="content" rows="7" cols="60" class="form-control"></textarea>
           </div>
           <input type="submit" value="답변 등록" class="btn btn-primary">
       </form>
     </div>
+{% endblock %}
 <!--
       <h2>{{ question.subject }}</h2>
       <p>{{ question.content }}</p>
@@ -64,5 +72,3 @@
           <input type="submit" value="답변 등록">
       </form>
       -->
-</body>
-</html>

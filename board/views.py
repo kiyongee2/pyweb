@@ -25,8 +25,8 @@ def question_create(request):
         form = QuestionForm(request.POST)  # 내용이 작성된 폼
         if form.is_valid():
             question = form.save(commit=False)  #가저장
-            question.create_date = timezone.now()
-            question.save()  #실제 저장
+            question.create_date = timezone.now()  #작성일
+            question.save()  #실제 저장(db에 저장)
             return redirect('board:index')  # 질문 목록 페이지 강제 이동
     else: #request.method == "GET":
         form = QuestionForm()  #질문 등록 폼 객체 변수 생성(비어있는 폼)
@@ -44,7 +44,8 @@ def answer_create(request, question_id):
             answer.question = question
             answer.save()
             return redirect('board:detail', question_id=question_id)
+            # return render(request, 'board:detail.html', question_id=question_id)
     else:
         form = AnswerForm()   # 비어있는 폼
-    context = {'form':form}
+    context = {'question':question, 'form':form}
     return render(request, 'board/detail.html', context)

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+    로그인 - login
+{% endblock %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row mb-2">
+        <div class="col-4">
+            <h4>로그인</h4>
+        </div>
+        <div class="col-8 text-right">
+            <span>또는 <a href="#">계정을 만드세요</a></span>
+        </div>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <!-- 유효성 검사 -->
+        {% if form.errors %}
+          {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label }}</strong>
+                {{ error }}
+            </div>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+        <div class="form-group">
+            <label for="username">사용자ID</label>
+            <input type="text" id="username" name="username" class="form-control"
+                   value="{{ form.username.value|default_if_none:''}}">
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" class="form-control"
+                   value="{{ form.password.value|default_if_none:''}}">
+        </div>
+        <button type="submit" class="btn btn-success">로그인</button>
+    </form>
+</div>
+
+
+{% endblock %}

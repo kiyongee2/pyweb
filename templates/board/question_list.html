@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>질문 목록</title>
-    <link rel="stylesheet" href="{% static 'board/css/bootstrap.css/' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}
+    질문/답변 목록
+{% endblock %}
+
+{% block content %}
   <div class="container my-3">
       <table class="table">
           <thead class="thead-dark">
@@ -32,6 +29,7 @@
       </table>
       <a href="{% url 'board:question_create' %} " class="btn btn-primary">질문 등록</a>
   </div>
+{% endblock %}
 
     <!-- 부트스트랩 적용 전
       <h1>질문 목록입니다.</h1>
@@ -49,5 +47,3 @@
       {% endif %}
       <a href="{% url 'board:question_create' %}">질문 등록</a>
       -->
-</body>
-</html>
