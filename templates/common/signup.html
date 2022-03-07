@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+    회원 가입 - signup
+{% endblock %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="row mb-2">
+        <div class="col-4">
+            <h4>회원 가입</h4>
+        </div>
+        <div class="col-8 text-right">
+            <span>또는 <a href="{% url 'common:login' %}">로그인을 하세요</a></span>
+        </div>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <!-- 유효성 검사 -->
+        {% include 'form_errors.html' %}
+        <div class="form-group">
+            <label for="username">사용자ID</label>
+            <input type="text" id="username" name="username" class="form-control"
+                   value="{{ form.username.value|default_if_none:''}}">
+        </div>
+        <div class="form-group">
+            <label for="password1">비밀번호</label>
+            <input type="password" id="password1" name="password1" class="form-control"
+                   value="{{ form.password1.value|default_if_none:''}}">
+        </div>
+        <div class="form-group">
+            <label for="password2">비밀번호 확인</label>
+            <input type="password" id="password2" name="password2" class="form-control"
+                   value="{{ form.password2.value|default_if_none:''}}">
+        </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" class="form-control"
+                   value="{{ form.email.value|default_if_none:''}}">
+        </div>
+        <button type="submit" class="btn btn-success">회원가입</button>
+    </form>
+</div>
+
+
+{% endblock %}

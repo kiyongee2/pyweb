@@ -8,17 +8,7 @@
         <h1>질문 등록</h1>
         <form action="" method="post">
             {% csrf_token %}
-    <!--        {{ form.as_p }}-->
-            {% if form.errors %}
-            <div class="alert alert-danger">
-                {% for field in form %}
-                    {% if field.errors %}
-                    <strong>{{ field.label }}</strong>
-                        {{ field.errors }}
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% include 'form_errors.html' %}
             <div class="form-group">
                 <label for="subject">제목</label>
                 <input type="text" id="subject" name="subject" class="form-control"

@@ -8,7 +8,7 @@
       <table class="table">
           <thead class="thead-dark">
             <tr>
-                <th>번호</th><th>제목</th><th>작성일</th>
+                <th>번호</th><th>제목</th><th>글쓴이</th><th>작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -19,6 +19,7 @@
                     <td>
                         <a href="{% url 'board:detail' question.id %}">{{ question.subject }}</a>
                     </td>
+                    <td>{{ question.author }}</td>
                     <td>{{ question.create_date }}</td>
                 </tr>
                 {% endfor %}
