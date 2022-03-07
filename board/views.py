@@ -55,3 +55,19 @@ def answer_create(request, question_id):
         form = AnswerForm()   # 비어있는 폼
     context = {'question':question, 'form':form}
     return render(request, 'board/detail.html', context)
+
+@login_required(login_url='common:login')
+def question_modify(request, question_id):
+    question = Question.objects.get(id=question_id)
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)  #새로 작성한 폼
+        if form.is_valid():
+            question = form.save(commit=False)     #가저장
+            question.modify_date = timezone.now()  # 수정일
+            question.author = request.user         # 글쓴이
+            question.save()                        # db에 저장
+            return redirect('board:detail', question_id=question_id)
+    else:
+        form = QuestionForm(instance=question)    #이미 작성된 폼
+    context = {'form':form}
+    return render(request, 'board/question_form.html', context)
