@@ -34,7 +34,7 @@ def question_create(request):
             question.create_date = timezone.now()  #작성일
             question.author = request.user  #인증된 사용자(글쓴이)
             question.save()  #실제 저장(db에 저장)
-            return redirect('board:index')  # 질문 목록 페이지 강제 이동
+            return redirect('board:boardlist')  # 질문 목록 페이지 강제 이동
     else: #request.method == "GET":
         form = QuestionForm()  #질문 등록 폼 객체 변수 생성(비어있는 폼)
     context = {'form':form}
@@ -99,7 +99,7 @@ def question_delete(request, question_id):
     #질문 삭제
     question = Question.objects.get(id=question_id)
     question.delete()     #해당 질문 삭제
-    return redirect('board:index')  # 질문 목록
+    return redirect('board:boardlist')  # 질문 목록
 
 @login_required(login_url='common:login')
 def answer_delete(request, answer_id):
