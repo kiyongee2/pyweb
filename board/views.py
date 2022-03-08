@@ -6,6 +6,10 @@ from board.models import Question, Answer
 from board.forms import QuestionForm, AnswerForm
 
 def index(request):
+    #인덱스 페이지
+    return render(request, 'board/index.html')
+
+def boardlist(request):
     #질문 목록
     question_list = Question.objects.order_by('-create_date')  #'-'내림 차순, -pk도 가능
     # question_list = Question.objects.all()  #db에서 전체 검색
@@ -58,6 +62,7 @@ def answer_create(request, question_id):
 
 @login_required(login_url='common:login')
 def question_modify(request, question_id):
+    # 질문 수정
     question = Question.objects.get(id=question_id)
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)  #새로 작성한 폼
@@ -71,3 +76,34 @@ def question_modify(request, question_id):
         form = QuestionForm(instance=question)    #이미 작성된 폼
     context = {'form':form}
     return render(request, 'board/question_form.html', context)
+
+@login_required(login_url='common:login')
+def answer_modify(request, answer_id):
+    #답변 수정
+    answer = Answer.objects.get(id=answer_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modify_date = timezone.now()
+            answer.author = request.user
+            answer.save()   #db에 저장
+            return redirect('board:detail', question_id = answer.question.id)
+    else:
+        form = AnswerForm(instance=answer)   # 수정할 답변 폼
+    context = {'form':form}
+    return render(request, 'board/answer_form.html', context)
+
+@login_required(login_url='common:login')
+def question_delete(request, question_id):
+    #질문 삭제
+    question = Question.objects.get(id=question_id)
+    question.delete()     #해당 질문 삭제
+    return redirect('board:index')  # 질문 목록
+
+@login_required(login_url='common:login')
+def answer_delete(request, answer_id):
+    # 답변 삭제
+    answer = Answer.objects.get(id=answer_id)
+    answer.delete()
+    return redirect('board:detail', question_id=answer.question.id)  # 상세페이지
