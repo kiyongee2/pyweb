@@ -32,7 +32,7 @@ def detail(request, question_id):
     context = {'question':question}
     return render(request, 'board/detail.html', context)
 
-@login_required(login_url='common:login')
+@login_required(login_url='common:login_view')
 def question_create(request):
     #질문 등록
     if request.method == "POST":
@@ -48,7 +48,7 @@ def question_create(request):
     context = {'form':form}
     return render(request, 'board/question_form.html', context)
 
-@login_required(login_url='common:login')
+@login_required(login_url='common:login_view')
 def answer_create(request, question_id):
     # 답변 등록
     question = get_object_or_404(Question, pk=question_id)

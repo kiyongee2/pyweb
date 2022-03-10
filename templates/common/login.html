@@ -16,7 +16,12 @@
     <form action="" method="post">
         {% csrf_token %}
         <!-- 유효성 검사 -->
-        {% include 'form_errors.html' %}
+<!--        {% include 'form_errors.html' %}-->
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endif %}
         <div class="form-group">
             <label for="username">사용자ID</label>
             <input type="text" id="username" name="username" class="form-control"
