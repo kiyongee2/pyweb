@@ -28,6 +28,15 @@
             {% endif %}
           </tbody>
       </table>
+      <!-- 페이지 처리 영역 -->
+      <!-- 페이지 리스트(목록) -->
+      <ul class="pagination justify-content-center">
+      {% for page_number in question_list.paginator.page_range %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+      {% endfor %}
+      </ul>
       <a href="{% url 'board:question_create' %} " class="btn btn-primary">질문 등록</a>
   </div>
 {% endblock %}
@@ -48,3 +57,14 @@
       {% endif %}
       <a href="{% url 'board:question_create' %}">질문 등록</a>
       -->
+
+<!--      <p class="text-center">1 2 3</p>
+          <ul class="text-center">
+              {% for question in question_list %}
+                 {% if forloop.counter < 5 %}
+                    <li style="list-style:none; display:inline">
+                        <a href="#">{{ forloop.counter }}&nbsp; &nbsp;</a>
+                    </li>
+                 {% endif %}
+              {% endfor %}
+          </ul>-->

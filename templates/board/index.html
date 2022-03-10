@@ -1,12 +1,77 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
   Welcome~ PyWeb!!
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="jumbotron">
-        <h1 class="text-center">어서오세요~ 무엇이든 물어보세요!!</h1>
+<!--    <div class="jumbotron">-->
+<!--        <h1 class="text-center">어서오세요~ 무엇이든 물어보세요!!</h1>-->
+<!--    </div>-->
+  <div class="row">
+    <!-- 배경 사진 전환 -->
+    <div class="card mb-4">
+      <img src="{% static 'board/images/bg0.jpg' %}" id="pic">
     </div>
+    <div class="col-6">
+      <h3 class="mt-4">무엇이든 물어보세요</h3>
+      <div class="card my-3" style="width:25rem">
+        <div class="card-body">
+          <p>질문/답변 게시판을 사용해 보세요</p>
+          <p>댓글과 추천기능을 사용해 보세요</p>
+          <a href="{% url 'board:boardlist' %}" class="btn btn-info">질문/답변 &rarr;</a>
+        </div>
+      </div>
+
+      <h3 class="mt-4">설문 투표</h3>
+      <div class="card my-3" style="width:25rem">
+        <div class="card-body">
+          <p>설문에 투표해 보세요</p>
+          <a href="#" class="btn btn-danger">투표 하기 &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <!-- 최신 질문 -->
+    <div class="col-6">
+      <h3 class="mt-4">Question - 최근 질문</h3>
+      {% for question in question_list %}
+        <div class="card my-3" style="width:25rem">
+          <div class="card-body">
+            <div class="card-text">
+              <div class="text-left">
+                <a href="{% url 'board:detail' question.id %}">
+                  {{ question.subject }}
+                </a>
+              </div>
+              <div class="text-center mt-2">
+                {{ question.author }} (작성일:{{ question.create_date }})
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+  </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  let picture = ["/static/board/images/bg0.jpg", "/static/board/images/bg1.jpg",
+                 "/static/board/images/bg2.jpg"];
+  let pic_idx = 0
+
+  showPicture();  //함수 호출 -> 작동
+
+  function showPicture(){
+    let img = document.getElementById('pic');
+    img.src = picture[pic_idx];   //0번 인덱스 이미지 저장
+    pic_idx += 1;   //1 증가
+    if(pic_idx == 3){
+      pic_idx = 0;
+    }
+    setTimeout(showPicture, 2000);   // 2초 설정(롤백함수)
+  }
+</script>
 {% endblock %}
