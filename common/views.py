@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from common.forms import UserForm
@@ -17,6 +17,11 @@ def login_view(request):
             return render(request, 'common/login.html', {'error':error})
     else:
         return render(request, 'common/login.html')
+
+def logout_view(request):
+    #로그 아웃 - 함수형 view(FBV)
+    logout(request)
+    return redirect('board:index')  #로그아웃 후 인덱스 페이지로 이동
 
 def signup(request):
     if request.method == "POST":

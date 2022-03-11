@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'board:index' %}">PyWeb</a>
       <!-- 햄버거 메뉴 -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarNav" aria-controls="navbarNav"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
             aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,7 +12,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'common:logout' %}">({{ user.username }}님)로그아웃</a>
+            <a class="nav-link" href="{% url 'common:logout_view' %}">({{ user.username }}님)로그아웃</a>
           {% else %}
             <a class="nav-link" href="{% url 'common:login_view' %}">로그인</a>
           {% endif %}
