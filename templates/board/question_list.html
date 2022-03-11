@@ -20,7 +20,8 @@
                     <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
 <!--                    <td>{{ forloop.counter|add:5 }}</td>-->
                     <td class="text-left px-3">
-                        <a href="{% url 'board:detail' question.id %}">{{ question.subject }}</a>
+                        <a href="{% url 'board:detail' question.id %}"
+                           class="text-decoration-none text-dark">{{ question.subject }}</a>
                     </td>
                     <td>{{ question.author }}</td>
                     <td>{{ question.create_date }}</td>

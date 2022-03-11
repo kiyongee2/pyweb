@@ -22,4 +22,6 @@ urlpatterns = [
     path('question/delete/<int:question_id>/', views.question_delete, name='question_delete'),
     # 답변 삭제
     path('answer/delete/<int:answer_id>/', views.answer_delete, name='answer_delete'),
+    # 질문 추천
+    path('vote/question/<int:question_id>/', views.vote_question, name='vote_question'),
 ]
