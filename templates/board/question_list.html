@@ -8,18 +8,18 @@
   <div class="container my-3">
       <table class="table">
           <thead class="thead-dark">
-            <tr>
+            <tr class="text-center">
                 <th>번호</th><th>제목</th><th>글쓴이</th><th>작성일</th>
             </tr>
           </thead>
           <tbody>
             {% if question_list %}
                 {% for question in question_list %}
-                <tr>
+                <tr class="text-center">
                     <!-- 번호 : 전체게시물수-시작인덱스-현재인덱스(0~9)+1 -->
                     <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
 <!--                    <td>{{ forloop.counter|add:5 }}</td>-->
-                    <td>
+                    <td class="text-left px-3">
                         <a href="{% url 'board:detail' question.id %}">{{ question.subject }}</a>
                     </td>
                     <td>{{ question.author }}</td>
