@@ -9,7 +9,7 @@
       <table class="table">
           <thead class="thead-dark">
             <tr class="text-center">
-                <th>번호</th><th>제목</th><th>글쓴이</th><th>작성일</th>
+                <th>번호</th><th>추천</th><th>제목</th><th>글쓴이</th><th>작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -19,9 +19,17 @@
                     <!-- 번호 : 전체게시물수-시작인덱스-현재인덱스(0~9)+1 -->
                     <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
 <!--                    <td>{{ forloop.counter|add:5 }}</td>-->
+                    <td>
+                        {% if question.voter.count > 0 %}
+                            <span class="badge badge-warning text-dark px-2 py-1">{{ question.voter.count }}</span>
+                        {% endif %}
+                    </td>
                     <td class="text-left px-3">
                         <a href="{% url 'board:detail' question.id %}"
                            class="text-decoration-none text-dark">{{ question.subject }}</a>
+                          {% if question.answer_set.count %}
+                        <span class="text-danger small">[{{ question.answer_set.count }}]</span>
+                          {% endif %}
                     </td>
                     <td>{{ question.author }}</td>
                     <td>{{ question.create_date }}</td>
