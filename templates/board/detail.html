@@ -58,6 +58,20 @@
                                class="btn btn-outline-secondary">삭제</a>-->
                         </div>
                         {% endif %}
+                        <hr>
+                        <div class="mt-3">
+                            {% for comment in question.comment_set.all %}
+                            <div class="text-muted">
+                                {{ comment.content }}<br>
+                                <span>
+                                    -{{ comment.author }}, {{ comment.create_date }}
+                                </span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <a href="{% url 'board:comment_create_question' question.id %}">댓글 추가..</a>
+                        </div>
                     </div>
                 </div>
             </div>
