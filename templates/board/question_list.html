@@ -6,6 +6,17 @@
 
 {% block content %}
   <div class="container my-3">
+      <!--검색 입력상자 -->
+      <div class="row justify-content-end mb-2">
+          <div class="col-4 input-group">
+              <input type="text" class="kw" value="{{ kw|default_if_none:'' }}">
+              <div class="input-group-append">
+                  <button type="button" id="btn_search"
+                          class="btn btn-outline-secondary">찾기</button>
+              </div>
+          </div>
+      </div>
+      <!-- 게시판 목록 테이블 -->
       <table class="table">
           <thead class="thead-dark">
             <tr class="text-center">
@@ -56,11 +67,14 @@
           {% for page_number in question_list.paginator.page_range %}
               {% if page_number == question_list.number %} <!-- 클릭한 페이지가 현재 페이지이면 -->
                 <li class="page-item active"> <!-- 버튼 활성화 -->
-                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+<!--              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>-->
+                    <a class="page-link" href="#"
+                       data-page="{{ page_number }}">{{ page_number }}</a>
                 </li>
               {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                    <a class="page-link" href="#"
+                       data-page="{{ page_number }}">{{ page_number }}</a>
                 </li>
               {% endif %}
           {% endfor %}
@@ -78,7 +92,30 @@
       <!-- 페이징 처리 끝 -->
       <a href="{% url 'board:question_create' %} " class="btn btn-primary">질문 등록</a>
       <div class="question_list"></div>
+      <!-- 검색 폼 -->
+      <form method="get" id="searchForm"> <!-- get방식-->
+          <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+          <input type="hidden" id="page" name="page" value="{{ page }}">
+      </form>
   </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(function(){
+        //페이지 처리
+        $('.page-link').click(function(){         //페이지 번호를 클릭하면
+            $('#page').val($(this).data('page'))  //페이지번호를 id가 page인 필드에 설정후
+            $('#searchForm').submit();            //숨겨서 폼을 전송함
+        });
+
+        //검색 처리
+        $('#btn_search').click(function(){ //'찾기'를 클릭하면
+            $('#kw').val($('.kw').val());   //입력된 키워드를 id가 kw인 필드에 설정
+            $('#page').val(1);             //1페이지부터 검색
+            $('#searchForm').submit();     //숨겨서 폼을 전송함
+        });
+    });
+</script>
 {% endblock %}
 
     <!-- 부트스트랩 적용 전

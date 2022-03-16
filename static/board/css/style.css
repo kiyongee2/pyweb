@@ -5,6 +5,9 @@
 .login{height: 300px;}
 .signup{height: 100px;}
 
+/* comment 스타일*/
+.comment{border-top: 1px dotted #ccc;}
+
 /* footer 스타일 */
 footer .menu{list-style: none;}
 footer .menu li{display: inline-block; margin: 10px 0;
